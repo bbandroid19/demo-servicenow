@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
+    <flow name="apix-servicenow-sapi-main">
+        <http:listener path="/api/${api.majorVersion}/*" config-ref="apiHttpListenerConfig">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="apixServicenowSapiConfig" />
+    </flow>
+    <flow name="post:\incidents:application\json:apixServicenowSapiConfig" doc:id="ecc2fc66-fc89-461e-9acb-ffa7b8ecb286">
+        <flow-ref doc:name="retrieve-all-incidents" doc:id="e1434302-23f2-48ca-ab2f-8191b5b23fc8" name="retrieve-all-incidents" />
+    </flow>
+    <flow name="put:\incident\(incidentId):application\json:apixServicenowSapiConfig" doc:id="75d8caa1-bc00-4fad-ac00-fc45708a7e58">
+        <flow-ref doc:name="incident-update-flow" doc:id="68f654f5-64f9-43bf-856e-c231ba2f3201" name="incident-update-flow" />
+    </flow>
+    <flow name="delete:\incident\(incidentId):apixServicenowSapiConfig" doc:id="dd3e001d-ae42-4fca-9b58-a6b377d9b88d">
+        <flow-ref doc:name="incident-delete-flow" doc:id="d89ee824-840c-4c81-bb5f-3e3d167e564c" name="incident-delete-flow" />
+    </flow>
+    <flow name="get:\incident\(incidentId):apixServicenowSapiConfig" doc:id="91465485-a220-4f54-a52e-2a160940c37b">
+        <flow-ref doc:name="incident-retrieve-flow" doc:id="6981aa97-d0e5-42de-9420-9e6066e53ae6" name="incident-retrieve-flow" />
+    </flow>
+    <flow name="post:\incident:application\json:apixServicenowSapiConfig" doc:id="fdbc4a3b-b485-4ddf-a354-88ec83f0071d">
+        <flow-ref doc:name="incident-create-flow" doc:id="b3e2ff83-f789-4525-9da5-7852ec54809c" name="incident-create-flow" />
+    </flow>
+</mule>

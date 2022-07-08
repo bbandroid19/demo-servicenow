@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:servicenow="http://www.mulesoft.org/schema/mule/servicenow"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/servicenow http://www.mulesoft.org/schema/mule/servicenow/current/mule-servicenow.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="readiness-check-subflow" doc:id="6eb735e3-db68-44b4-9d11-d81f4dc907b5" >
+		<try doc:name="Try" doc:id="e10b5dc4-8fb9-4c92-a34f-e01301c03167" >
+			<ee:transform doc:name="Transform Message" doc:id="3cdf41d4-8fd0-495b-a291-1ef6e16f226c" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.service-now.com/incident
+---
+{
+	ns0#insert: {
+		sys_id: "669521e307b730102dfeff808c1ed0c3"
+		
+	}
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<servicenow:invoke service="incident" operation="getRecords" doc:name="Adding Record" doc:id="4348a996-e170-497b-89f9-5c47e4ab0200" config-ref="servicenowConfig" target="incident">
+			</servicenow:invoke>
+			<set-payload value='#[output application/json&#10;---&#10;{&#10;	servicename: "ServiceNow",&#10;	status: "Up"&#10;}]' doc:name="Readiness Response" doc:id="90a15748-43be-44a2-8639-07235515811d" />
+			<error-handler >
+				<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="208c4781-d156-4de4-a408-be20c3315f88" >
+					<set-payload value='#[output application/json&#10;---&#10;{&#10;	servicename: "ServiceNow",&#10;	status: "Down"&#10;}]' doc:name="Readiness Response" doc:id="3aff9a83-683c-4d44-9cf5-a9dcf8f229e2" />
+				</on-error-continue>
+			</error-handler>
+		</try>
+	</sub-flow>
+</mule>

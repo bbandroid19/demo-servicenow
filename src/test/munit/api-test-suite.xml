@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="api-test-suite.xml" />
+	<munit:test name="api-test-suite-apikit-bad-request" doc:id="fa225865-9745-4a91-bd3f-ebe3fc75e2c2" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="04215b90-4608-46c1-851b-08b9f85a33e1" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apixServicenowSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="646e86a5-9af6-49fc-901b-e6978bdcb213" >
+				<flow-ref doc:name="apix-servicenow-sapi-main" doc:id="b9d79413-70d1-4a20-83c7-6c46f5b9b082" name="apix-servicenow-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="0169f839-177d-4ccd-9cf1-597e709c97eb" >
+						<logger level="INFO" doc:name="Logger" doc:id="1ab3d106-50d0-4376-b5e0-8648ab03ea83" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="9d2fbc2e-bdde-4882-a21f-6ae454fff273" actual="#[payload.errorType.identifier]" expected='#["BAD_REQUEST"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-apikit-not-found" doc:id="9024ae6b-3722-485a-aeed-ab68da036952" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="b4d63a36-3ef2-419d-84f3-a6800c96fd46" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apixServicenowSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="ffb7ab42-e966-4312-a0b1-1f5b60fc39e9" >
+				<flow-ref doc:name="apix-servicenow-sapi-main" doc:id="94f4d9e4-6986-4dd7-b920-301728626b63" name="apix-servicenow-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="73961526-f7a6-4f2b-b4ed-973e7636facb" >
+						<logger level="INFO" doc:name="Logger" doc:id="5d47631e-82d0-49c3-b0b9-75c3c6ea8869" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="15cb6186-53fc-45d2-b854-43e8f49903da" actual="#[payload.errorType.identifier]" expected='#["NOT_FOUND"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-apikit-method-not-allowed" doc:id="02f5f66c-75b2-48e9-94ea-b203789d0229" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="e0ee3951-0106-49c0-a5d2-b59a0e71cf48" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apixServicenowSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="8d1f9485-1320-4b37-9902-83eb9363f49b" >
+				<flow-ref doc:name="apix-servicenow-sapi-main" doc:id="efdfe563-3be9-41e6-a47b-b2a7b50c2144" name="apix-servicenow-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="349d0fbe-a10f-4e26-8e6c-d25a6b29a411" >
+						<logger level="INFO" doc:name="Logger" doc:id="814db174-4300-40af-a5e3-dcf61c867586" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="0ee77e41-50c7-4a0a-a948-8a3e08fc3a7a" actual="#[payload.errorType.identifier]" expected='#["METHOD_NOT_ALLOWED"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-apikit-not-acceptable" doc:id="a537a2ee-c9fc-4546-a3fa-45b7f355d466" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="59b953d7-f15f-4f02-9426-3b1745e97684" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apixServicenowSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="467d0fc2-e8df-4fac-ae2a-27e6fa692ccc" >
+				<flow-ref doc:name="apix-servicenow-sapi-main" doc:id="d02ad58e-f0ad-4627-acd2-be740f37029a" name="apix-servicenow-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="d26d096a-3a2f-4ec1-9028-737838760d46" >
+						<logger level="INFO" doc:name="Logger" doc:id="4efad736-9cf6-4948-bcb5-6e221ddde88e" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="6b8468a8-9549-4b85-afea-9085857be45b" actual="#[payload.errorType.identifier]" expected='#["NOT_ACCEPTABLE"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-unsupported-mediatype" doc:id="179519eb-0d28-4f7f-9d1c-ed2f9c82a562" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="da70e219-1598-4ec3-a8ad-0d3232b2505e" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apixServicenowSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="bf93aff1-0160-4c3f-9399-7664b321f70f" >
+				<flow-ref doc:name="apix-servicenow-sapi-main" doc:id="2b64c2c5-ddaf-4032-a677-525a4e4d8acc" name="apix-servicenow-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="0691b71e-648a-484e-822f-097e47976a46" >
+						<logger level="INFO" doc:name="Logger" doc:id="dfec5467-0045-4bf4-8dc4-04a7b53330b0" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="76c821fd-fccf-4425-825d-d13cddf7d8e7" actual="#[payload.errorType.identifier]" expected='#["UNSUPPORTED_MEDIA_TYPE"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-apikit-not-implemented" doc:id="ce2b607c-acb8-4d58-b8f0-3e6b247152dc" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="aac6cf0c-bf4e-43f1-97b1-0d3fb1061e35" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apixServicenowSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="d658c5a3-2391-4dfd-831e-ad47acf91649" >
+				<flow-ref doc:name="apix-servicenow-sapi-main" doc:id="d4894c03-8006-4099-a28a-d3fc2157ee88" name="apix-servicenow-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="eabe4b77-1020-436c-9f2c-359b5bb8a3f1" >
+						<logger level="INFO" doc:name="Logger" doc:id="34227025-c88c-4381-ae4b-93a9cb9dbe1c" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="e5c227bf-ddcd-46f3-b2f6-55f848bdb8e9" actual="#[payload.errorType.identifier]" expected='#["NOT_IMPLEMENTED"]'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-post:\incidents:application\json:apiRouterConfigTest1" doc:id="f2cb0e14-d5a5-42d7-960d-6c865c156c13" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="e5eac87a-7069-4646-8ff3-8ba5d818d02c" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="retrieve-all-incidents" attributeName="doc:name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+					<munit-tools:payload value="#[readUrl('classpath://mock-payload-retrieveAll.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="1536a5e8-edc7-419b-ac4b-0ec7e725005e">
+				<munit:payload value="#[readUrl('classpath://set-event-payload-retrieve.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\incidents:application\json:apiRouterConfig" doc:id="62ca6876-f01b-422e-8698-0c4c900fd846" name="post:\incidents:application\json:apixServicenowSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="fd25747a-6a11-43b0-ad6b-21b30901d996" actual="#[payload]" expected="#[readUrl('classpath://mock-payload-retrieveAll.dwl')]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-put:\incident\(incidentId):application\json:apiRouterConfigTest" doc:id="96d54f0e-09d4-4bd7-ae1c-48795566f745" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="6bd3f37a-1841-485e-8e9f-5b64680b726e" processor="flow-ref" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="incident-update-flow" attributeName="name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://mock-payload-update.dwl')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="93d07281-4eb6-443f-86ec-54cdd8022515" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://set-event_payload.dwl')]" />
+				<munit:attributes value='#[{"uriParams":{"incidentId":"2d5dd09c1b333010c9955283604bcb91"}}]' />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="put:\incident\(incidentId):application\json:apiRouterConfig" doc:id="773f3b1e-7146-4e3d-b081-48390ce545ef" name="put:\incident\(incidentId):application\json:apixServicenowSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="8705a473-946b-45b2-a399-a7b0da2b247a" actual="#[payload]" expected="#[readUrl('classpath://mock-payload-update.dwl')]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-delete:\incident\(incidentId):apiRouterConfigTest1" doc:id="009616fb-0544-4bd9-8d6a-bb380679a9ea" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="54422ca2-5b4b-4c39-a782-62a492c0ef19" processor="flow-ref" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="incident-delete-flow" attributeName="name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://mock-payload-delete.dwl')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="f58bf637-b273-4a59-9748-459e8fdb9030" >
+				<munit:attributes value='#[{"uriParams":{"incidentId":"2d5dd09c1b333010c9955283604bcb91"}}]' />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="delete:\incident\(incidentId):apiRouterConfig" doc:id="523d7bc8-baff-4bca-a78f-51a99d9029ae" name="delete:\incident\(incidentId):apixServicenowSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="0a428953-ca84-40ec-9684-2074e867144e" actual="#[payload]" expected="#[readUrl('classpath://mock-payload-delete.dwl')]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-get:\incident\(incidentId):apiRouterConfigTest1" doc:id="921f29b8-48a4-4c6c-93b3-b02c9c87ae09" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="df77e09c-6557-4bcb-bdb2-e02736f4c8b4" processor="flow-ref" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="incident-retrieve-flow" attributeName="name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://mock-payload-retrieve.dwl')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="1708d7e6-2e76-4e63-aa79-c34f81226f85" >
+				<munit:attributes value='#[{"uriParams":{"incidentId":"2d5dd09c1b333010c9955283604bcb91"}}]' />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="get:\incident\(incidentId):apiRouterConfig" doc:id="431ec08a-1229-4f10-a0c8-8d91388ac9c8" name="get:\incident\(incidentId):apixServicenowSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="74c7be2a-8eee-4a9a-81bc-72b0b931160a" actual="#[payload]" expected="#[readUrl('classpath://mock-payload-retrieve.dwl')]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-post:\incident:application\json:apiRouterConfigTest1" doc:id="dbc39902-3ee7-48c0-96e4-c30e8432c64f" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="145c1a0c-1f9d-4508-bfbe-14ce9fe855c4" processor="flow-ref" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="incident-create-flow" attributeName="name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://mock_payload.dwl')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="224bfd04-9619-4fb7-8c59-e6780d0c65f6" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://set-event_payload.dwl')]" mediaType="application/json" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\incident:application\json:apiRouterConfig" doc:id="cad9734d-2fae-41e1-b403-475b2212355f" name="post:\incident:application\json:apixServicenowSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="eeae36e3-9252-48b8-a1e6-14190a5a5537" actual="#[payload]" expected="#[readUrl('classpath://mock_payload.dwl')]" />
+		</munit:validation>
+	</munit:test>
+	
+</mule>

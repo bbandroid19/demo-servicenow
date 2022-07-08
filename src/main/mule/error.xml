@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:module-logger="http://www.mulesoft.org/schema/mule/module-logger" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/module-logger http://www.mulesoft.org/schema/mule/module-logger/current/mule-module-logger.xsd">
+	<error-handler name="connector-error-handler" doc:id="3ccc5655-5af2-4f54-a53d-04dc182fb310" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="655997f3-7d94-41ba-ae6c-13ecea8a8805" type="SERVICENOW:CONNECTIVITY">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="5a0a6a1a-23df-4825-aed7-84ff81f4ec36" message='#["Start of the Flow"]'/>
+			<set-variable value="500" doc:name="httpStatus" doc:id="52600f39-9f1a-48be-bb1f-604a5f19acad" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="a3b51acb-5351-42af-af5e-a0a069fb6c16" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="fd61ae6b-36bc-4a97-915d-9c5cc170f48d" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ad3c33b1-5dca-4814-b223-4775f3516d75" type="SERVICENOW:BAD_REQUEST">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="05206838-c0ec-4153-958f-2f85ca34c270" message='#["Start of the Flow"]'/>
+			<set-variable value="400" doc:name="httpStatus" doc:id="b962b103-60b0-4741-a09c-ffa6485868c6" variableName="httpStatus" />
+			<flow-ref doc:name="error-message-flow" doc:id="f1d8b4b4-8483-4cc3-a4a6-b8932dd346d0" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="aab3866e-9bc9-449c-9199-2e9e7c446d70" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a281c91a-5704-455f-bfc5-281c9424f8f2" type="SERVICENOW:BAD_RESPONSE">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="fbce0ba0-76f6-49bd-88af-ed3a5e88030a" message='#["Start of the Flow"]'/>
+			<set-variable value="500" doc:name="httpStatus" doc:id="c7d2b992-75d5-4fe5-957e-2fdc711f43f8" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="278c79ca-db85-4358-9296-ec7ff2f537b7" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="4b905389-337b-4f24-b63c-b1060b2d4e7a" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="c7bd0a24-a4dc-4950-971e-076770e43341" type="SERVICENOW:CANNOT_DISPATCH">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="f6e0f163-d898-43e7-b64e-42e40f9c63f3" message='#["Start of the Flow"]'/>
+			<set-variable value="500" doc:name="httpStatus" doc:id="6ec42163-032c-42d7-8d17-fb61fc25bdc8" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="5eaef886-208a-4c4b-a9a3-98b1cbbffb66" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="6d648f69-e918-49e2-8365-1f79ae35eeba" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="d6893b45-d2d5-4b0d-9ba4-68f99b8c97d6" type="SERVICENOW:ENCODING">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="bd7721e5-fe74-4e45-a3d5-bc8eff4116c5" message='#["Start of the Flow"]'/>
+			<set-variable value="415" doc:name="httpStatus" doc:id="d566f1e6-5bfa-49d5-bc91-fda5868f41e1" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="80b0dadf-8b59-483a-a228-130f342ccee2" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="10a71e4f-8ef0-4a41-b2ed-4afcc8865978" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="89824db0-73cf-42a6-961f-f0ebf67ab9e4" type="SERVICENOW:INVALID_WSDL">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="227eed9f-30ea-43ff-ab32-87ecbe1b639e" message='#["Start of the Flow"]'/>
+			<set-variable value="107" doc:name="httpStatus" doc:id="e8ed2963-c942-465a-87d4-4d31768fd547" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="a8a4273d-bc17-4d28-8cc4-2bba49d84f13" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="c6a4984c-f994-4ec7-9a29-6f694de5bc9c" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7ba48a73-0e54-4821-ac1c-9130ba305312" type="SERVICENOW:PROCESSING_ERROR">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="0547cf45-3112-44c4-b60b-6ed6c10499e7" message='#["Start of the Flow"]'/>
+			<set-variable value="102" doc:name="httpStatus" doc:id="eb0158ba-7e71-4a69-baaf-462d2b998c8a" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="54739983-f275-4f88-9c81-c1295d498766" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="141d1019-0120-4236-9482-29c7a7d59068" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="454a863f-2eef-4eef-942f-0ebc6de3c7eb" type="SERVICENOW:RETRY_EXHAUSTED">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="17131f51-038f-4d35-85d6-18ce1976c534" message='#["Start of the Flow"]'/>
+			<set-variable value="429" doc:name="httpStatus" doc:id="8ca3a356-9d1d-4a13-aac3-91135eff1442" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="421503f8-d015-43d8-9282-95cefb3ee48e" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="ea6cf976-5831-4d97-ac29-b2f9eda71ed2" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b86ed399-c078-4046-8503-f4b315360101" type="SERVICENOW:SOAP_FAULT">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="a04c29dd-277c-48ee-a811-f52a6a28153f" message='#["Start of the Flow"]'/>
+			<set-variable value="500" doc:name="httpStatus" doc:id="e47b2f2e-46ea-492e-870a-bda2d3e13fd6" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="23fd7f8e-7b8a-4e18-8e00-0f4262fede35" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="956c9b53-240a-478a-b6e6-ad323b7fe645" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1353800b-d6d3-4f77-b2d5-2b5041cd29b3" type="SERVICENOW:TIMEOUT">
+			<logger level="ERROR" doc:name="Start Logger" doc:id="d3bc730a-6ee9-40bc-b1cf-cdb840901af0" message='#["Start of the Flow"]'/>
+			<set-variable value="408" doc:name="httpStatus" doc:id="28b044e5-6a9c-46f5-8548-38179ece51cb" variableName="httpStatus"/>
+			<flow-ref doc:name="error-message-flow" doc:id="e7795423-4705-403b-a028-5d46acc6cd16" name="error-message-flow"/>
+			<logger level="ERROR" doc:name="End Logger" doc:id="9df2c0e3-21f2-435e-b660-7b7e4b370ce3" message='#["End of the Flow"]'/>
+		</on-error-propagate>
+	
+</error-handler>
+	<flow name="error-message-flow" doc:id="3a619185-1ed1-4c87-ab43-666f0f4e0314" >
+		<ee:transform doc:name="Error JSON" doc:id="0bc9d5e2-aef9-4c1c-ab44-139ad33e3d4c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	statusCode: vars.httpStatus,
+	errorType: error.errorType.asString,
+	description: error.description default ""
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
